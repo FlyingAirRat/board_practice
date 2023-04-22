@@ -7,6 +7,7 @@
     <!-- JavaScript Bundle with Popper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <title>Document</title>
     <style>
         * { 
@@ -44,7 +45,11 @@
         </div>
     </div>
     <div id="contents" class="container border border-1 my-2 bg-light">
-        <div id="contents_list" class="container border border-1 bg-white my-2 text-center">
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4 d-flex justify-content-end"><button id="main_write" class="btn btn-primary m-2">게시글작성</button></div>
+        </div>
+        <div id="contents_list" class="container border border-1 bg-white p-2 m-0 text-center">
             <div id="contents_list_header">
                 <div class="row">
                     <div class="col-1">글번호</div>
@@ -63,18 +68,25 @@
         
     </div>
     <script type="text/javascript">
-        var i = 0;
-        var str = '';
-        for(i=0; i<10; i++){
-            str+=`<div class="row">
-                <div class="col-1">`+i+`</div>
-                <div class="col-5 text-start">asdf</div>
-                <div class="col-2">aa</div>
-                <div class="col-4">2023-04-21</div>
-            </div>`;
-        }
-        console.log(str);
-        document.getElementById('contents_list_body').innerHTML = str;
+        $(function(){
+            var i = 0;
+            var str = '';
+            for(i=0; i<10; i++){
+                str+=`<div class="row">
+                    <div class="col-1">`+i+`</div>
+                    <div class="col-5 text-start">asdf</div>
+                    <div class="col-2">aa</div>
+                    <div class="col-4">2023-04-21</div>
+                </div>`;
+            }
+            document.getElementById('contents_list_body').innerHTML = str;
+
+            $('#main_write').on('click', function(){
+                location.href='asdf';
+                return false;
+            });
+        });
+        
     </script>
 </body>
 </html>
