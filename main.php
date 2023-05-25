@@ -41,7 +41,7 @@
                         <button type="submit" class="m-0 btn btn-primary">검색</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
     <div id="contents" class="container border border-1 my-2 bg-light">
@@ -58,7 +58,7 @@
                     <div class="col-4">작성일자</div>
                 </div> 
             </div>
-            <div id="contents_list_body" class="p-3">
+            <div id="contents_list_body">
 
             </div>
             
@@ -71,52 +71,15 @@
         $(function(){
             var i = 0;
             var str = '';
-            $(window).on('load', function(){
-                $.ajax({
-                    url:'../process/get_list.php',
-                    type:'POST',
-                    dataType:'json',
-                    data:'',
-                    success:function(fetch){
-                        if(!fetch.exec){
-                            alert('문제발생');
-                            return false;
-                        }
-                        console.log(fetch);
-
-                        fetch.data.forEach(function(row, post_idx){
-                            str+=`<div class="row" data-post-idx="`+row.post_idx+`">
-                                <div class="col-1">`+row.post_idx+`</div>
-                                <div class="col-5 text-start">`+row.title+`</div>
-                                <div class="col-2">`+row.contents+`</div>
-                                <div class="col-4">`+row.inpt_dttm+`</div>
-                            </div>`;
-                        });      
-                        $('#contents_list_body').html(str);
-                    }
-                })
-            })
-            
-            $('#contents_list_body').on('mouseenter', '.row',
-            function(ev){
-                $(this).css('cursor','pointer');
-                $(this).addClass('bg-secondary');
-            });
-            $('#contents_list_body').on('mouseleave', '.row', 
-            function(ev){
-                $(this).removeClass('bg-secondary');
-            });
-
-            $('#contents_list_body').on('click', '.row', function(ev){
-                let redirect = "/view_contents.php?post_idx="+$(this).data().postIdx;
-                console.log(redirect);
-                // similar behavior as clicking on a link
-                window.location = redirect;
-                return false;
-            })
-
-            
-            
+            for(i=0; i<10; i++){
+                str+=`<div class="row">
+                    <div class="col-1">`+i+`</div>
+                    <div class="col-5 text-start">asdf</div>
+                    <div class="col-2">aa</div>
+                    <div class="col-4">2023-04-21</div>
+                </div>`;
+            }
+            document.getElementById('contents_list_body').innerHTML = str;
 
             $('#main_write').on('click', function(){
                 location.href='write.php';

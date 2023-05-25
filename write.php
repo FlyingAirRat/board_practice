@@ -1,3 +1,7 @@
+<?php
+    
+?>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,6 +11,7 @@
     <!-- JavaScript Bundle with Popper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <title>Document</title>
     <style>
         * { 
@@ -45,14 +50,14 @@
 
     </div>
     <div id="contents" class="container border border-1 my-2 bg-light">
-        <form id="form_write" method="post" action="write_process.php">
+        <form id="form_write" onsubmit="return false;">
             <div class="row">
                 <div class="col-1 text-center">글제목</div>
                 <div class="col-10 p-0 my-1">
                     <input type="text" name="title" id="write_title" class="w-100">
                 </div>
                 <div class="col-1 text-center">
-                    <button id="write_submit" type="submit" class="m-0 btn btn-primary">등록</button>
+                    <button id="write_submit" class="m-0 btn btn-primary">등록</button>
                 </div>
             </div>
             <div class="row h-auto">
@@ -68,7 +73,45 @@
         
     </div>
     <script type="text/javascript">
+        $(function(){
+            jQuery.fn.serializeObject = function() {
+                let obj = null;
+                try {
+                    if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+                        let arr = this.serializeArray();
+                        if (arr) {
+                            obj = {};
+                            jQuery.each(arr, function() {
+                                obj[this.name] = this.value;
+                            });
+                        }
+                    }
+                } catch (e) {
+                    alert(e.message);
+                }
+            
+                return obj;
+            };
 
+            $('#write_submit').click(function(){
+                console.log($('#form_write').serializeObject());
+                $.ajax({
+                    url:'../process/write_process.php',
+                    type:'POST',
+                    dataType:'json',
+                    data:$('#form_write').serializeObject(),
+                    success:function(data){
+                        if(!data.exec){
+                            alert('문제발생');
+                            return false;
+                        }
+
+                        alert('성공적으로 처리.');
+
+                    },
+                })
+            })
+        });
     </script>
 </body>
 </html>
